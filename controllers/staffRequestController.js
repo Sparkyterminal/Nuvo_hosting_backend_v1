@@ -48,10 +48,17 @@ const createStaffRequest = async (req, res) => {
 // Get all staff requests
 const getAllStaffRequests = async (req, res) => {
   try {
-    const requests = await StaffRequest.find();
+    const requests = await StaffRequest.find()
+      .populate('profilePhoto') 
+      .sort({ createdAt: -1 }); 
+
     res.json(requests);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch requests', error: err.message });
+    console.error('Error fetching Staff Requests:', err);
+    res.status(500).json({ 
+      message: 'Failed to fetch requests', 
+      error: err.message 
+    });
   }
 };
 
