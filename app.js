@@ -4,7 +4,7 @@ const userRoutes = require('./routes/userRoutes');
 const eventRequestRoutes = require('./routes/eventRequestRoutes');
 const authRoutes = require('./routes/authRoutes');
 const staffRequestRoutes = require('./routes/staffRequestRoutes');
-const mediaRoutes = require('./routes/media/media');
+const mediaRoutes = require('./routes/media');
 const app = express();
 
 app.use(cors());

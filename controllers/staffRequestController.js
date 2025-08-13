@@ -5,14 +5,12 @@ const createStaffRequest = async (req, res) => {
   try {
     const data = req.body;
 
-    // Handle uploaded file if using multer
     if (req.file) {
       data.images = {
         profilePhoto: req.file.filename
       };
     }
 
-    // Convert flat language fields to array (if submitted that way)
     if (data.language1 || data.rate1) {
       data.languages = [
         { name: data.language1, proficiency: data.rate1 },

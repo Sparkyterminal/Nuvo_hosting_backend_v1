@@ -46,7 +46,7 @@ const staffRequestSchema = new mongoose.Schema({
 
   // Image Uploads
   images: {
-    profilePhoto: { type: String },
+    profilePhoto: [{ type: mongoose.Schema.Types.ObjectId, ref: 'media' }],
   },
 
   // Availability or Other Flags (if any extra checkboxes)
