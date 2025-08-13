@@ -45,9 +45,7 @@ const staffRequestSchema = new mongoose.Schema({
   holidayWork: { type: String }, // yes/no
 
   // Image Uploads
-  images: {
-    profilePhoto: [{ type: mongoose.Schema.Types.ObjectId, ref: 'media' }],
-  },
+  profilePhoto: [{ type: mongoose.Schema.Types.ObjectId, ref: 'media' }],
 
   // Availability or Other Flags (if any extra checkboxes)
   availability: {

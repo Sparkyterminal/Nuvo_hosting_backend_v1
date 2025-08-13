@@ -3,12 +3,21 @@ const StaffRequest = require('../models/staffRequestModel');
 // Create new staff request
 const createStaffRequest = async (req, res) => {
   try {
-    const data = req.body;
+    const data = { ...req.body };
 
     if (req.file) {
-      data.images = {
-        profilePhoto: req.file.filename
-      };
+      const mediaDoc = await Media.create({
+        filename: req.file.filename,
+        path: req.file.path, // if using multer
+        mimetype: req.file.mimetype,
+        size: req.file.size
+      });
+
+      data.profilePhoto = [mediaDoc._id];
+    }
+
+    if (Array.isArray(data.profilePhoto)) {
+      data.profilePhoto = data.profilePhoto.map(id => id);
     }
 
     if (data.language1 || data.rate1) {
@@ -17,18 +26,22 @@ const createStaffRequest = async (req, res) => {
         { name: data.language2, proficiency: data.rate2 },
         { name: data.language3, proficiency: data.rate3 },
         { name: data.language4, proficiency: data.rate4 }
-      ].filter(lang => lang.name);
+      ].filter(lang => lang.name); 
     }
 
-    // Normalize experienceAreas to array if not already
     if (data.experienceAreas && !Array.isArray(data.experienceAreas)) {
       data.experienceAreas = [data.experienceAreas];
     }
 
-    const newRequest = await StaffRequest.create(data);
-    res.status(201).json(newRequest);
+    await StaffRequest.create(data);
+
+    res.status(201).json({ message: 'Staff request created successfully' });
   } catch (err) {
-    res.status(400).json({ message: 'Error creating staff request', error: err.message });
+    console.error('Error creating Staff request:', err);
+    res.status(400).json({
+      message: 'Error creating staff request',
+      error: err.message
+    });
   }
 };
 
