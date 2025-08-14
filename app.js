@@ -1,10 +1,6 @@
 const express = require('express');
-const morgan = require("morgan");
-const helmet = require("helmet");
-const path = require("path");
-const cors = require("cors");
-const cron = require('node-cron');
-const fs = require("fs");const userRoutes = require('./routes/userRoutes');
+const cors = require('cors');
+const userRoutes = require('./routes/userRoutes');
 const eventRequestRoutes = require('./routes/eventRequestRoutes');
 const authRoutes = require('./routes/authRoutes');
 const staffRequestRoutes = require('./routes/staffRequestRoutes');
@@ -13,7 +9,7 @@ const app = express();
 // Schedule cron job to empty certain directories daily at 01:01 AM
 cron.schedule('01 01 * * *', () => {
     const empty_these_directories = [
-        "assets/district_issues",
+        "assets/temp_resources",
         "assets/department_issues",
         "assets/district_reports",
         "assets/dis_reports",
